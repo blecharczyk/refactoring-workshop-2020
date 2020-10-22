@@ -5,7 +5,7 @@
 
 #include "EventT.hpp"
 #include "IPort.hpp"
-
+//elko
 namespace Snake
 {
 ConfigurationError::ConfigurationError()
