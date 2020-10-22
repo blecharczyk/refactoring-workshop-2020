@@ -23,15 +23,6 @@ struct UnexpectedEventException : std::runtime_error
 
 class Controller : public IEventHandler
 {
-public:
-    Controller(IPort& p_displayPort, IPort& p_foodPort, IPort& p_scorePort, std::string const& p_config);
-
-    Controller(Controller const& p_rhs) = delete;
-    Controller& operator=(Controller const& p_rhs) = delete;
-
-    void receive(std::unique_ptr<Event> e) override;
-
-private:
     struct Segment
     {
         int x;
@@ -48,6 +39,18 @@ private:
 
     Direction m_currentDirection;
     std::list<Segment> m_segments;
+    bool checkIfSnakeIsAlive(const Segment& head);
+    void prepareHead(Segment& head);
+    void makeMove(Segment& newHead, bool& lost);
+
+public:
+    Controller(IPort& p_displayPort, IPort& p_foodPort, IPort& p_scorePort, std::string const& p_config);
+
+    Controller(Controller const& p_rhs) = delete;
+    Controller& operator=(Controller const& p_rhs) = delete;
+
+    void receive(std::unique_ptr<Event> e) override;
+
 };
 
 } // namespace Snake
