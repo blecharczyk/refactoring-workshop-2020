@@ -215,16 +215,22 @@ Controller::Segment Controller::getNewHead() const
 
 void Controller::receive(std::unique_ptr<Event> e)
 {
+    //hej hej, niestety zadanie nie powiodło się, ale zacząłem się zastanawiać, czy my potrzebujemy w ogóle rzutować
+    //chyba ten nasz obiekt nie ma stanu, więc można mu przekazać po prostu typ pochodny
+    //trochę mało czasu, ja ktoś nie jest za bardzo obeznany z tematem castowania i w ogóle, starałem się wgryźć w temat - niestety się nie udało
     try {
         handleTimePassed(*dynamic_cast<EventT<TimeoutInd> const&>(*e));
     } catch (std::bad_cast&) {
         try {
+            //handleDirectionChange(*dynamic_cast<EventT<DirectionInd> const&>(*e));
             handleDirectionChange(*dynamic_cast<EventT<DirectionInd> const&>(*e));
         } catch (std::bad_cast&) {
             try {
+                //handleFoodPositionChange(*dynamic_cast<EventT<FoodInd> const&>(*e));
                 handleFoodPositionChange(*dynamic_cast<EventT<FoodInd> const&>(*e));
             } catch (std::bad_cast&) {
                 try {
+                    //handleNewFood(*dynamic_cast<EventT<FoodResp> const&>(*e));
                     handleNewFood(*dynamic_cast<EventT<FoodResp> const&>(*e));
                 } catch (std::bad_cast&) {
                     throw UnexpectedEventException();
