@@ -73,7 +73,7 @@ bool Controller::isPositionOutsideMap(int x, int y) const
     return x < 0 or y < 0 or x >= m_mapDimension.first or y >= m_mapDimension.second;
 }
 
-void Controller::sendPlaceNewFood(int x, int y)
+void Controller::NewFoodPlacer::sendPlaceNewFood(int x, int y, IPort& m_displayPort, std::pair<int, int>& m_foodPosition)
 {
     m_foodPosition = std::make_pair(x, y);
 
@@ -197,7 +197,8 @@ void Controller::updateFoodPosition(int x, int y, std::function<void()> clearPol
     }
 
     clearPolicy();
-    sendPlaceNewFood(x, y);
+    NewFoodPlacer newFoodPlacer;
+    newFoodPlacer.sendPlaceNewFood(x, y, m_displayPort, m_foodPosition);
 }
 
 void Controller::handleFoodInd(std::unique_ptr<Event> e)

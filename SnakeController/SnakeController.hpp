@@ -66,7 +66,13 @@ private:
 
     void updateFoodPosition(int x, int y, std::function<void()> clearPolicy);
     void sendClearOldFood();
-    void sendPlaceNewFood(int x, int y);
+    //void sendPlaceNewFood(int x, int y);
+
+    class NewFoodPlacer{
+        public:
+        void sendPlaceNewFood(int x, int y, IPort& m_displayPort, std::pair<int, int>& m_foodPosition);
+
+    };
 
     bool m_paused;
 };
